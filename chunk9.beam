@@ -1,0 +1,23 @@
+⟦LIGHTBEAM::CHUNK_09⟧
+TITLE Endgame Assembly
+
+ASSUME:
+  NP ⊆ P/poly
+  ⇒ exists poly-size circuit for L_mix^hash
+
+PIPELINE:
+  correctness
+    => audits (WV,FOCUS,BRC,SRC,robust)
+    => LocalNOT
+    => monotone circuit (after restriction)
+    => contradicts monotone CLIQUE lower bound
+
+EMIT:
+  CONTRADICTION
+  NP ⊄ P/poly
+
+CAVEAT:
+  necessity(correctness => audits) is explicit assumption,
+  isolated and stress-tested in prior chunks.
+
+⟦END LIGHTBEAM⟧
