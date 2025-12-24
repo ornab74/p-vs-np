@@ -1,1 +1,22 @@
-Chunk 2: Introduced amplification to close quantifier loopholes. Showed amplified BRC enforces uniform resampling stability.
+CHUNK 2 — Necessity of Focus Invariance
+Date: 2025-12-24
+
+Statement:
+Any circuit that correctly computes L_mix^hash must be invariant under the
+clique-preserving normal form H -> H<C> on accepting instances with a verified witness C.
+
+Key Idea:
+On instances with a unique valid witness clique C*, the semantic value of the
+language depends only on edges supporting C*. All other edges are irrelevant.
+
+Proof Outline:
+1) Condition on UNIQ (unique witness via VV hashing).
+2) By Chunk 1, a correct circuit emits the witness C* on acceptance.
+3) Construct H<C*> by deleting all edges that participate in any t-clique != C*.
+4) The language value is preserved exactly.
+5) If a circuit changes output under H -> H<C*> with noticeable probability,
+   then (H, Phi, S) and (H<C*>, Phi, S) form a polynomial-time constructible
+   counterexample: same language value, different circuit output.
+
+Conclusion:
+Correctness forces focus invariance except on negligible measure.

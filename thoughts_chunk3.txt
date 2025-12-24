@@ -1,1 +1,33 @@
-Chunk 3: Blueprint of the Amplification + Conditioning Lemma with explicit repetition and union bounds.
+CHUNK 3 — Necessity of Block Resampling Invariance
+Date: 2025-12-24
+
+Statement:
+On focused instances H<C*> with a unique witness clique C*, any circuit that
+computes L_mix^hash correctly must be invariant under resampling any block phi_i
+for i not in C*, except with negligible probability.
+
+Semantic Fact:
+On H<C*>,
+  L(H<C*>, Phi, S) = AND over j in C* of SAT(phi_j),
+which is completely independent of phi_i for i not in C*.
+
+Proof Outline:
+1) Condition on UNIQ and on acceptance with verified witness C*.
+2) Fix any block i not in C*.
+3) Consider two instances differing only in phi_i:
+      I  = (H<C*>, Phi, S)
+      I' = (H<C*>, Phi^(i <- i'), S)
+   where phi_i' is an independent resample.
+4) By semantics, L(I) = L(I').
+5) If the circuit flips output between I and I' with probability >= epsilon,
+   then we can sample such pairs in polynomial time and obtain explicit
+   disagreements with the language on Omega(epsilon) measure.
+6) Therefore correctness implies:
+      Pr[f(I) != f(I')] <= negligible.
+
+Amplification:
+Repeating the resampling test r = Theta(log(1/delta)) times ensures uniform stability:
+any block with non-negligible influence is detected with high probability.
+
+Conclusion:
+Correctness implies block resampling invariance on all off-clique blocks.

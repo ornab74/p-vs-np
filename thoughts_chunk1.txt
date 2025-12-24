@@ -1,1 +1,25 @@
-Chunk 1: Defined the formal audit game and suite (WV, FOCUS, BRC, SRC, SPA). Mapped goal: passing audits implies LocalNOT.
+CHUNK 1 — Necessity of Witness Forcing
+Date: 2025-12-24
+
+Statement:
+Any polynomial-size circuit family that computes L_mix^hash correctly on a
+1 - 1/poly(n) fraction of inputs can be transformed (with negligible loss) into
+a circuit family that emits a valid NP witness whenever it accepts.
+
+Reason:
+For L_mix^hash, acceptance without a witness is locally refutable in polynomial time.
+
+Proof Outline:
+1) Every accepting instance has a small certificate:
+   - a clique C of size t
+   - satisfying assignments for phi_i for i in C
+   - a hash condition h_S(C)=0
+2) If a circuit outputs 1 without a witness, we can enumerate all size-t cliques
+   (t constant) and verify none work, producing a certified false positive.
+3) If this happens on non-negligible measure, correctness is violated.
+4) Otherwise, acceptance-without-witness happens with negligible probability.
+5) Build f' that runs f, and on acceptance searches for and outputs a witness.
+   f' preserves correctness up to negligible error.
+
+Conclusion:
+Witness verification is not an artificial audit—it is forced by correctness.
