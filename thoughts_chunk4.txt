@@ -1,0 +1,1 @@
+Chunk 4: Full formal proof of the Amplification–Conditioning Lemma, completing audit soundness under the strengthened model.

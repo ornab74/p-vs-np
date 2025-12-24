@@ -1,0 +1,47 @@
+CHUNK 5 — Collapsing the Audit Model (Progress Toward P vs NP)
+Date: 2025-12-24
+
+Goal:
+Show that any circuit computing L_mix^hash must pass the strengthened audit suite,
+or else derive a contradiction with correctness on a non-negligible measure of inputs.
+
+Strategy:
+1) Necessity of Witness Verification:
+   Any correct circuit for L_mix^hash must be correct on accepting inputs; if it
+   outputs 1 without a valid witness, we can locally verify falsity by checking
+   clique and SAT constraints. Therefore, either the circuit emits a witness or
+   is refutable on a polynomially checkable set—contradicting correctness.
+
+2) Necessity of Focus Normal Form:
+   On inputs with a unique witness C*, the value of the language is invariant under
+   removal of edges not supporting C*. Any correct circuit must be invariant under
+   H -> H⟨C*⟩ on accepting paths, or else it disagrees with the language on a
+   polynomially verifiable transformation.
+
+3) Necessity of Block Resampling Stability:
+   On focused instances H⟨C*⟩, the language value is independent of off-clique blocks.
+   If a circuit changes output when resampling an off-clique block with non-negligible
+   probability, this yields a pair of efficiently constructible instances with
+   identical language value but differing circuit output—violating correctness.
+
+4) Necessity of Seed Resampling Stability:
+   Hash seeds that preserve h_S(C*) define an equivalence class on which the language
+   value is constant. Any circuit depending on irrelevant seed bits disagrees on
+   two instances with identical language value, again violating correctness.
+
+Conclusion:
+For any circuit that is correct on a 1 - 1/poly fraction of inputs drawn from the
+natural distribution, failing any of the audits implies detectable error on a
+polynomially checkable set of instances. Hence correctness forces audit compliance
+up to negligible error.
+
+Status:
+- This does not yet prove that *all* P/poly circuits pass the audits unconditionally,
+  but it shows that audit failure implies a structured, efficiently testable error.
+- Combined with amplification, this strongly suggests that the audit model captures
+  an intrinsic property of correctness for L_mix^hash.
+
+Next steps:
+- Formalize each necessity implication as a reduction from audit failure to explicit
+  counterexample construction.
+- Quantify measure bounds to lift from distributional correctness to worst-case.

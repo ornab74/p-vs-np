@@ -1,0 +1,1 @@
+Chunk 1: Defined the formal audit game and suite (WV, FOCUS, BRC, SRC, SPA). Mapped goal: passing audits implies LocalNOT.

@@ -1,0 +1,1 @@
+Chunk 2: Introduced amplification to close quantifier loopholes. Showed amplified BRC enforces uniform resampling stability.
