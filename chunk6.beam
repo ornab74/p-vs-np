@@ -1,0 +1,30 @@
+⟦LIGHTBEAM::CHUNK_06⟧
+TITLE Robustness / Anti-cheat: Steering Immunity
+
+THREATS:
+  CHEAT_RARE_ACCEPT
+  CHEAT_WITNESS_STEER
+  CHEAT_CONDITION_BIAS
+
+BEAM UNIQ_LOCK:
+  UNIQ => exists! C*
+  WV => ACCEPT implies witness=C*
+
+BEAM ACCEPT_RATE:
+  yes-mass p_yes >= 1/poly
+  correctness => accept-rate on yes-instances not negligible
+
+BEAM AMPLIFY_ALL:
+  repeat BRC over all i∉C* with r trials
+  repeat SRC over seed-irrelevant bits with r trials
+  reject on any flip
+
+BEAM TRANSCRIPT_TEST:
+  auditor randomness hidden
+  f cannot predict which resample occurs
+
+CONCLUDE:
+  steering cannot evade audits
+  any non-negligible instability => detectable counterexample
+
+⟦END LIGHTBEAM⟧

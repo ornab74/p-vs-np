@@ -1,0 +1,78 @@
+CHUNK 6 — Robustness / Anti-cheat: Steering Immunity
+Date: 2025-12-24
+
+Statement:
+A circuit computing L_mix^hash cannot evade the strengthened audits by
+(i) accepting only on a carefully chosen subset of instances,
+(ii) steering which witness clique it outputs, or
+(iii) adaptively exploiting the auditor’s conditioning.
+Any such "steering" strategy implies a polynomial-time detectable inconsistency
+with the language on a non-negligible measure of inputs.
+
+Goal of this chunk:
+Close the remaining loophole in the necessity direction:
+  correctness ⇒ audit compliance,
+by proving that witness-steering and selective acceptance cannot make audit
+tests vacuous.
+
+Threat model (cheater behaviors):
+1) Rare-acceptance dodge:
+   f outputs 1 only on a vanishing fraction of accepting instances (or only when
+   it can predict it won't be audited).
+2) Witness steering:
+   On instances with multiple valid cliques, f outputs a clique C_f that is not
+   "the" semantic clique we want to focus on, attempting to avoid focus/resample tests.
+3) Conditioning bias:
+   Since audits condition on acceptance and the emitted witness, f may try to bias
+   the conditional distribution to be audit-friendly while still being incorrect elsewhere.
+
+Core tools:
+- VV uniqueness slicing (UNIQ) to remove multi-witness ambiguity.
+- Amplification in the audit game to make rare/biased success negligible.
+- Transcript-based testing: auditor uses only verifier-computable transforms
+  (WV, H⟨C⟩, block/seed resampling) so f cannot "predict" hidden randomness.
+
+Main Lemma 6.1 (Steering Immunity on UNIQ slices):
+Condition on UNIQ, where there is a unique valid witness clique C* with h_S(C*)=0.
+Then any accepting output clique must equal C* (by WV), so witness steering is impossible.
+Therefore, on UNIQ slices, the auditor's focus transform is canonical and cannot be dodged.
+
+Proof sketch:
+- If f accepts on UNIQ but outputs C != C*, WV fails (clique/hash/SAT check).
+- Hence acceptance implies C=C* except with negligible probability.
+
+Main Lemma 6.2 (Rare acceptance cannot nullify audits):
+If f is correct on 1 - 1/poly(n) fraction of inputs, then its acceptance rate on
+true instances cannot be negligible; otherwise it would reject many true instances,
+causing noticeable error.
+
+Formalization:
+Let p_yes = Pr_{I~D}[L(I)=1]. Under the constructed distributions (star/pair and
+unique-witness conditioned components), p_yes is lower-bounded by 1/poly(n).
+If f accepts only on o(p_yes) measure, then Pr[f(I)!=L(I)] is at least p_yes - o(p_yes),
+contradicting correctness.
+
+Main Lemma 6.3 (Audit amplification defeats conditional gaming):
+Even if f can increase pass probability under conditioning, amplified audits enforce
+uniform invariances on the entire conditional slice:
+- repeated BRC across all i∉C*
+- repeated SRC across irrelevant seed bits
+- reject on any flip
+Thus any non-negligible instability implies failure with overwhelming probability.
+
+Constructive consequence:
+If any steering exists that makes audits pass while violating invariances elsewhere,
+then by rerunning the same instance with fresh resamplings, the auditor detects
+inconsistency; the inconsistency yields a verifiable counterexample pair with equal
+language value.
+
+Conclusion:
+Combining:
+- UNIQ removes witness ambiguity,
+- acceptance-rate lower bounds prevent vacuous conditioning,
+- amplification forces uniform invariances,
+we obtain robustness: correctness forces audit compliance even against
+steering and selective-acceptance strategies.
+
+Chain so far:
+correctness ⇒ WV ⇒ FOCUS ⇒ BRC ⇒ SRC ⇒ worst-case compliance ⇒ steering immunity (Chunk 6)
