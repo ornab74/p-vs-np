@@ -7,10 +7,12 @@ This file records the actual dependency graph of the program. A claim may move t
 | T0 | `L_mix^hash ∈ NP` | proved, assuming polynomially bounded encodings | Witness verification is polynomial-time. |
 | T1 | Base `L_mix` is NP-hard | plausible / routine | Needs one precise reduction and parameter encoding. |
 | T1a | The parameter choice `t=log^2 n`, `B=n^3` is NP-hard because CLIQUE is NP-hard | unproved and likely unusable as stated | Standard CLIQUE NP-hardness has `t` supplied by the reduction. Fixing a length-dependent logarithmic `t` needs a polynomial padding reduction; brute force is quasipolynomial in this regime. |
+| T1b | The formal layered language with unrestricted polynomially encoded layer count is NP-complete | proved | Membership is direct; NP-hardness follows from the standard 3SAT-to-compatibility-graph reduction with one layer per clause and one vertex per satisfying local clause assignment. |
 | T2 | Hashed language is NP-hard under deterministic many-one reductions | unproved and likely misstated | Valiant–Vazirani is randomized and promise-sensitive; inverse-polynomial success does not itself give deterministic many-one NP-hardness. |
 | T3 | A correct decision circuit can emit witnesses with polynomial overhead for the original language | unproved in the stated framework | Standard self-reduction changes queries and sometimes input length; the current FORCE transform does not encode membership of the chosen prefix. |
-| T3a | The layered-mask language admits exact same-length witness pinning | proved as a redesigned-language lemma | Singleton candidate masks give `L(PIN(I,P))=1` iff a witness extends ordered prefix `P`; formula restrictions still require fixed-width padding. |
-| T3b | The layered-mask redesign retains the exact audit and lower-bound pipeline | open | Audits must be restated for ordered witnesses and masks, and the ultimate lower-bound model remains unresolved. |
+| T3a | The layered-mask language admits exact same-length vertex pinning | proved as a redesigned-language lemma | Singleton candidate masks give `L(PIN(I,P))=1` iff a witness extends ordered prefix `P`. |
+| T3b | The formal layered language admits complete same-length witness extraction | proved | Fixed-width vertex masks and assignment-bit masks permit exact oracle pinning of every witness coordinate with polynomially many same-length queries. |
+| T3c | The layered redesign retains the exact audit and lower-bound pipeline | open | Audits must be restated for positional witnesses and masks, and the ultimate lower-bound model remains unresolved. |
 | T4 | Hash-Extendability | not the right isolated bottleneck as currently stated | For a surviving witness `C`, every subset of `C` trivially leaves `C` present under the current FORCE operation; the real issue is whether FORCE semantically forces inclusion and supports greedy extraction. |
 | T4a | Free field variables `z_i` make the additive residue extendable after `C` is fixed | proved as a local algebraic observation | The equation can be solved using one nonzero coefficient, but it does not pin or isolate the clique and does not repair FORCE. |
 | T4b | The augmented additive hash closes decision-to-witness extraction | false as stated | A YES answer to `FORCE(I,T∪{v})` may be witnessed by a clique avoiding `T∪{v}`; the induction used by the greedy extractor fails. |
@@ -43,10 +45,9 @@ For every theorem or lemma, add:
 
 ## Immediate priority order
 
-1. Complete the layered-mask language and fixed-width `PIN` self-reduction.
-2. Restate FOCUS/BRC/SRC/SPA for the layered language using the polynomial focus transform.
-3. Use the direct Efron–Stein theorem to obtain function-level off-witness decomposition under an explicit product measure.
-4. Prove or falsify that SPA identifies the resulting witness-block function as the intended AND of local predicates.
-5. Formulate a representation theorem into monotone circuits with local oracles and bound the oracle locality.
-6. Check the extra oracle-rectangle hypothesis required by known arbitrary-depth CLO lower bounds, or prove a new lower bound without it.
-7. Only then reconnect to CLIQUE lower bounds.
+1. Restate FOCUS/BRC/SRC/SPA for the formal layered language using the polynomial focus transform.
+2. Use the direct Efron–Stein theorem to obtain function-level off-witness decomposition under an explicit product measure.
+3. Prove or falsify that SPA identifies the resulting witness-block function as the intended AND of local predicates.
+4. Formulate a representation theorem into monotone circuits with local oracles and bound the oracle locality.
+5. Check the extra oracle-rectangle hypothesis required by known arbitrary-depth CLO lower bounds, or prove a new lower bound without it.
+6. Only then reconnect to CLIQUE lower bounds.
