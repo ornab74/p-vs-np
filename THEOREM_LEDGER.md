@@ -26,9 +26,12 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7b | Layered audits imply special polynomial-size monotone/CLO compression | open and central | Must exploit structure beyond monotonicity. |
 | T7c | Generic dual-rail conversion gives usable CLO locality | false | The construction has locality exactly `1`, above known lower-bound regimes. |
 | T7d | Auxiliary-only audits constrain graph-edge subcircuit | false | Any graph-only circuit passes them. |
+| T7e | A general circuit has a well-defined KW orientation-defect mass on named hard-pair distributions | proved as a representation-level invariant | Reversed terminal literals define the defect set; equivalent circuits can have different defect. |
+| T7f | Small KW orientation defect yields a polynomial-size CLO of comparable locality | open | Requires an explicit circuit-to-CLO construction and rectangle accounting. |
 | T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits do not bound positive-negative oracle rectangles. |
 | T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra rectangle condition. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
+| T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair; polynomial cleanup needs special rectangle structure. |
 | T9 | Hard graph projection matches a lower-bound parameter regime | clarified | Fixing CLIQUE parameter bits preserves polynomial circuit size under `NP subseteq P/poly`. |
 | T9a | Formal layered language has superpolynomial lower bound for circuits with at most `(1/6) log log m` NOT gates | proved from Amano--Maruoka | Exact polynomial projection to their CLIQUE family; see `COMPLETE_FEW_NOT_LOWER_BOUND.md`. |
 | T9b | Audits imply an equivalent circuit with few NOT gates | impossible from black-box audits alone | Would require white-box canonicalization or a new representation theorem. |
@@ -40,8 +43,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Stop seeking syntactic NOT bounds from black-box audits.
-2. Search for a special semantic representation invariant yielding bounded-locality CLOs.
-3. Prove measure transfer and pointwise cleanup for the hard positive/negative sets.
-4. Match the resulting model to an applicable published lower bound.
+1. Prove or falsify the circuit-to-CLO theorem from small KW orientation defect.
+2. Search for a graph-sensitive semantic identity that bounds orientation defect rather than raw NOT syntax.
+3. Prove special rectangle structure for error cleanup on the chosen hard pair distribution.
+4. Match the resulting CLO to an applicable published lower bound.
 5. Keep the few-NOT theorem as the completed restricted endpoint and do not describe it as an unrestricted separation.
