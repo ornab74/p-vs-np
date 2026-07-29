@@ -30,9 +30,11 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7f | Small KW orientation defect yields a polynomial-size CLO of comparable locality | open | Requires an explicit circuit-to-CLO construction and rectangle accounting. |
 | T7g | Every Boolean gate function has a unique minimal orientation equal to its set of decreasing hypercube coordinates | proved | `CERTIFIED_ORIENTATION_MODEL.md`; finite verification is exponential in gate fan-in but exact. |
 | T7h | Layered CLIQUE inherits `d(4w+1)=Omega(m)` for circuits whose every gate has orientation weight at most `w` | proved from Koroth--Sarma and exact projection | `SPARSE_ORIENTATION_TRANSFER.md`; restricted depth theorem only. |
-| T7i | Layered CLIQUE inherits the mixed sparse/dense-negation lower bound | proved from corrected Koroth--Sarma theorem and exact projection | Allows a few arbitrary dense negations plus additional negations with small orientation support; see `MIXED_NEGATION_SUPPORT_TRANSFER.md`. |
-| T7j | Layered CLIQUE inherits the vertex-support orientation depth lower bound | proved from Koroth--Sarma and exact projection | Measures how many graph vertices are incident to oriented edge variables; see `VERTEX_SUPPORT_ORIENTATION_TRANSFER.md`. |
-| T7k | Minimal orientation weight and incident-vertex support are mechanically computable for finite gate truth tables | proved | `tools/orientation_vertex_support.py`; exact but exponential in gate arity. |
+| T7i | Layered CLIQUE inherits the mixed sparse/dense-negation lower bound | proved from corrected Koroth--Sarma theorem and exact projection | Allows a few arbitrary dense negations plus additional negations with small orientation support. |
+| T7j | Layered CLIQUE inherits the vertex-support orientation depth lower bound | proved from Koroth--Sarma and exact projection | Measures graph vertices incident to oriented edge variables. |
+| T7k | Minimal orientation weight and incident-vertex support are mechanically computable for finite gate truth tables | proved | Exact but exponential in gate arity. |
+| T7l | Small random decreasing-edge audit rejection implies small orientation support | false without a violation-mass margin | The spike function has full support `N` but rejection probability `2^{-(N-1)}`; see `ORIENTATION_MASS_BARRIER.md`. |
+| T7m | Under the promise `nu_i=0` or `nu_i>=tau`, edge-audit error `delta` bounds orientation support by `N delta/tau` | proved | Exact counting argument; useful only if a nontrivial `tau` follows from special structure. |
 | T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits do not bound positive-negative oracle rectangles. |
 | T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra rectangle condition. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
@@ -49,8 +51,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Prove or falsify the circuit-to-CLO theorem from small KW orientation defect.
-2. Search for a graph-sensitive semantic identity that bounds canonical orientation defect, dense-gate count, or orientation vertex support.
-3. Prove special rectangle structure for error cleanup on the chosen hard-pair distribution.
-4. Match the resulting CLO to an applicable published lower bound.
+1. Search for a special anti-hiding theorem giving an inverse-polynomial violation-mass margin for canonical gate functions.
+2. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with explicit rectangle accounting.
+3. Search for graph-sensitive identities that imply vertex concentration or polynomially templated decreasing edges.
+4. Prove special rectangle structure for cleanup on the chosen hard-pair distribution.
 5. Keep all few-NOT and orientation theorems as completed restricted endpoints and do not describe them as an unrestricted separation.
