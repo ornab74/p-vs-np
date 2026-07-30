@@ -39,8 +39,11 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7o | Gate-wise bounds `C0+C1<=c` and directional audit mass `delta` imply orientation weight at most `N delta 2^{c-2}` | proved | Activates the sparse-orientation depth theorem for this certified restricted class. |
 | T7p | Full edge-flip mass plus two-sided certificates bounds ordinary variable support by `N delta_flip 2^{c-2}` | proved | Supplies the support quantity used by the mixed-negation theorem when the internal-gate hypotheses are available. |
 | T7q | Small average gate violation mass implies few high-orientation exceptional gates | proved by summation and Markov | Still requires white-box access to internal gate masses and certificate bounds. |
-| T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits do not bound positive-negative oracle rectangles. |
-| T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra rectangle condition. |
+| T7r | Two-sided certificates automatically give polynomially many CLO rectangles | false in general | Constant certificate sum gives polynomially many candidate pairs, but logarithmic sum gives only quasipolynomial count; arbitrary hard pairs need not admit compatible minimum certificates. |
+| T7s | Small certificate complexity implies small CLO locality | false | A single negated edge literal has `C0+C1=2` but its natural clique--multipartite rectangle has locality bounded away from zero and approaching `1`; see `CERTIFICATE_TO_CLO_BARRIER.md`. |
+| T7t | Compatible certificate pairs define valid gate-separation rectangles | proved | Robust CLO correctness and coverage of every needed hard pair remain separate obligations. |
+| T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits and certificate bounds do not control positive-negative oracle rectangles under the hard distribution. |
+| T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra positive-side overlap condition. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
 | T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair; polynomial cleanup needs special rectangle structure. |
 | T9 | Hard graph projection matches a lower-bound parameter regime | clarified | Fixing CLIQUE parameter bits preserves polynomial circuit size under `NP subseteq P/poly`. |
@@ -55,8 +58,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Test whether certificate-generated violating subcubes yield polynomial CLO rectangle covers with controlled locality.
-2. Search for a canonicalization theorem giving logarithmic two-sided gate certificates and small internal directional mass.
-3. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with explicit rectangle accounting.
-4. Search for graph-sensitive identities that imply vertex concentration or polynomially templated decreasing edges.
+1. Search for hard-distribution-specific rectangles whose locality is small, not merely cube-thick certificate subcubes.
+2. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with robust correctness and explicit rectangle accounting.
+3. Search for graph-sensitive identities that imply vertex concentration or polynomially templated exceptional pairs.
+4. Prove the positive-side overlap condition required by the known arbitrary-depth CLO lower bound.
 5. Keep all few-NOT, orientation, and certificate-margin results as restricted endpoints and do not describe them as an unrestricted separation.
