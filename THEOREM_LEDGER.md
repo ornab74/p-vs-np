@@ -47,8 +47,11 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7w | The complete family of edge-witness rectangles has low union locality | false | It covers every hard pair, so union locality is exactly `1`, and each positive clique lies in `binom(k,2)` positive sides. |
 | T7x | For monochromatic-anchor rectangles, condition `A_d` implies union locality at most `d/(k-1)` | proved | Averaging gives total positive mass at most `d`; every anchor of size at least two has negative mass at most `1/(k-1)`. |
 | T7y | Polynomial-size anchor families with constant `A_d` and locality below `1/50` exist | proved | Pairwise disjoint anchors of size `floor(k/(d+1))+1` give `Theta(n/k)` rectangles, `A_d`, and locality at most `d/(k-1)`. |
-| T7z | Such bounded-load anchor families automatically cover all exceptional pairs of a small circuit | open and central | Requires an anchorability theorem connecting circuit behavior to the explicit family. |
-| T8 | Constructed oracle model has sufficiently small CLO locality | open | Rectangle existence and locality are solved for anchor families; expressive coverage and robust simulation remain open. |
+| T7z | Such bounded-load anchor families automatically cover all exceptional pairs of a small circuit | false from total defect alone | A function-preserving `O(n^2)` wrapper programs a defect slice `{K_B0} x V` of mass `1/binom(n,k)` containing pairs with no monochromatic anchor of size at least three. |
+| T7aa | Small representation-level KW defect implies large-anchorability of every reversed pair | false | `KW_DEFECT_PROGRAMMING_BARRIER.md`; deterministic descent can be programmed by an equivalent wrapper. |
+| T7ab | The programmed nonanchorable slice has cheap arbitrary-rectangle cleanup | proved | `{K_B0} x V` has locality `1/binom(n,k)` and positive overlap one, showing large anchors need not be the only oracle shape. |
+| T7ac | A hybrid decomposition into anchorable bulk plus low-complexity cleanup suffices for the CLO route | open and central | Must bound cleanup rectangle count or positive-projection complexity and prove robust monotone simulation. |
+| T8 | Constructed oracle model has sufficiently small CLO locality | open | Rectangle existence and locality are solved for anchor families; hybrid expressive coverage and robust simulation remain open. |
 | T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires a valid robust CLO construction with bounded positive-side overlap. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
 | T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair. |
@@ -56,7 +59,7 @@ This file records the actual dependency graph of the program. A claim may move t
 | T9a | Formal layered language has superpolynomial lower bound for circuits with at most `(1/6) log log m` NOT gates | proved from Amano--Maruoka | Exact polynomial projection to their CLIQUE family. |
 | T9b | Audits imply an equivalent circuit with few NOT gates | impossible from black-box audits alone | Would require white-box canonicalization or a new representation theorem. |
 | T9c | Sparse or mixed orientation alone separates unrestricted `P/poly` | false / insufficient | The unrestricted assumption supplies circuits with no known orientation-support or certificate bound. |
-| T10 | Therefore `NP not subseteq P/poly` | not established | Must prove anchorability plus robust CLO simulation, or another unrestricted representation lower bound. |
+| T10 | Therefore `NP not subseteq P/poly` | not established | Must prove the hybrid anchor/cleanup decomposition plus robust CLO simulation, or another unrestricted representation lower bound. |
 
 ## Required proof format
 
@@ -64,8 +67,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Prove or falsify an anchorability theorem mapping every exceptional hard pair of a canonical circuit into one of the explicit large-anchor rectangles.
-2. Prove robust CLO correctness for arbitrary separating interpretations of those anchor oracles.
-3. Analyze whether canonical circuit paths naturally expose large vertex anchors of size `Omega(k/d)`.
-4. Determine whether the `A_d` CLO lower bound remains superpolynomial for the exact `d` delivered by a candidate construction.
-5. Keep all few-NOT, orientation, certificate-margin, and anchor-family results as restricted or conditional endpoints and do not describe them as an unrestricted separation.
+1. Formalize a hybrid decomposition `Rev_C subseteq E_anchor union E_cleanup` with polynomial anchor and cleanup covers.
+2. Bound cleanup positive-projection complexity rather than only total defect mass.
+3. Prove robust CLO correctness for arbitrary separating interpretations of anchor and cleanup oracles.
+4. Determine whether the resulting `A_d` parameter retains a superpolynomial published lower bound.
+5. Keep all few-NOT, orientation, certificate-margin, anchor-family, and programmed-defect results as restricted, conditional, or barrier endpoints; do not describe them as an unrestricted separation.
