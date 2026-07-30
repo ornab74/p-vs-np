@@ -1,0 +1,51 @@
+name: Proof audit verifiers
+
+on:
+  pull_request:
+  push:
+    branches:
+      - agent/capacity-wide-proof-audit
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile verifier sources
+        run: python -m compileall -q tools
+
+      - name: Run core finite verifiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/minimal_orientation.py
+          python tools/orientation_vertex_support.py
+          python tools/kw_orientation_defect.py
+          python tools/orientation_mass_spike.py
+          python tools/certificate_margin_check.py
+          python tools/certificate_clo_locality.py
+          python tools/witness_template_locality.py
+          python tools/anchor_design_check.py
+          python tools/verify_layered_pinning.py
+
+      - name: Run counterexample regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/counterexample_amplification_bound.py
+          python tools/counterexample_force_and_masked_gate.py
+          python tools/counterexample_graph_blind_audits.py
+          python tools/counterexample_localnot_restriction.py
+          python tools/kw_defect_programming_barrier.py
