@@ -29,7 +29,7 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7e | A general circuit has a well-defined KW orientation-defect mass on named hard-pair distributions | proved as a representation-level invariant | Reversed terminal literals define the defect set; equivalent circuits can have different defect. |
 | T7f | Small KW orientation defect yields a polynomial-size CLO of comparable locality | open | Requires an explicit circuit-to-CLO construction and rectangle accounting. |
 | T7g | Every Boolean gate function has a unique minimal orientation equal to its set of decreasing hypercube coordinates | proved | `CERTIFIED_ORIENTATION_MODEL.md`; finite verification is exponential in gate fan-in but exact. |
-| T7h | Layered CLIQUE inherits `d(4w+1)=Omega(m)` for circuits whose every gate has orientation weight at most `w` | proved from Koroth--Sarma and exact projection | `SPARSE_ORIENTATION_TRANSFER.md`; restricted depth theorem only. |
+| T7h | Layered CLIQUE inherits `d(4w+1)=Omega(m)` for circuits whose every gate has orientation weight at most `w` | proved from Koroth--Sarma and exact projection | Restricted depth theorem only. |
 | T7i | Layered CLIQUE inherits the mixed sparse/dense-negation lower bound | proved from corrected Koroth--Sarma theorem and exact projection | Allows a few arbitrary dense negations plus additional negations with small orientation support. |
 | T7j | Layered CLIQUE inherits the vertex-support orientation depth lower bound | proved from Koroth--Sarma and exact projection | Measures graph vertices incident to oriented edge variables. |
 | T7k | Minimal orientation weight and incident-vertex support are mechanically computable for finite gate truth tables | proved | Exact but exponential in gate arity. |
@@ -42,18 +42,21 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7r | Two-sided certificates automatically give polynomially many CLO rectangles | false in general | Constant certificate sum gives polynomially many candidate pairs, but logarithmic sum gives only quasipolynomial count. |
 | T7s | Small certificate complexity implies small CLO locality | false | A single negated edge literal has `C0+C1=2` but its natural clique--multipartite rectangle has locality bounded away from zero and approaching `1`. |
 | T7t | Compatible certificate pairs define valid gate-separation rectangles | proved | Robust CLO correctness and hard-pair coverage remain separate obligations. |
-| T7u | Fixed vertex anchors give exact low-locality clique--multipartite rectangles | proved | For `|S|=s`, locality is `[(k)_s/(n)_s][((k-1)^(n-s)-1)/((k-1)^(n-1)-1)]`; see `WITNESS_TEMPLATE_LOCALITY_CALCULUS.md`. |
+| T7u | Fixed vertex anchors give exact low-locality clique--multipartite rectangles | proved | Exact locality formula in `WITNESS_TEMPLATE_LOCALITY_CALCULUS.md`. |
 | T7v | A large family of constant-size witness anchors can satisfy constant `A_d` | false | If `s(d+1)<=k`, condition `A_d` forces at most `d` distinct size-`s` anchors. |
 | T7w | The complete family of edge-witness rectangles has low union locality | false | It covers every hard pair, so union locality is exactly `1`, and each positive clique lies in `binom(k,2)` positive sides. |
-| T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits, certificates, and local witness templates do not simultaneously give low locality, polynomial expressive capacity, and bounded positive overlap. |
-| T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra positive-side overlap condition. |
+| T7x | For monochromatic-anchor rectangles, condition `A_d` implies union locality at most `d/(k-1)` | proved | Averaging gives total positive mass at most `d`; every anchor of size at least two has negative mass at most `1/(k-1)`. |
+| T7y | Polynomial-size anchor families with constant `A_d` and locality below `1/50` exist | proved | Pairwise disjoint anchors of size `floor(k/(d+1))+1` give `Theta(n/k)` rectangles, `A_d`, and locality at most `d/(k-1)`. |
+| T7z | Such bounded-load anchor families automatically cover all exceptional pairs of a small circuit | open and central | Requires an anchorability theorem connecting circuit behavior to the explicit family. |
+| T8 | Constructed oracle model has sufficiently small CLO locality | open | Rectangle existence and locality are solved for anchor families; expressive coverage and robust simulation remain open. |
+| T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires a valid robust CLO construction with bounded positive-side overlap. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
 | T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair. |
 | T9 | Hard graph projection matches a lower-bound parameter regime | clarified | Fixing CLIQUE parameter bits preserves polynomial circuit size under `NP subseteq P/poly`. |
 | T9a | Formal layered language has superpolynomial lower bound for circuits with at most `(1/6) log log m` NOT gates | proved from Amano--Maruoka | Exact polynomial projection to their CLIQUE family. |
 | T9b | Audits imply an equivalent circuit with few NOT gates | impossible from black-box audits alone | Would require white-box canonicalization or a new representation theorem. |
 | T9c | Sparse or mixed orientation alone separates unrestricted `P/poly` | false / insufficient | The unrestricted assumption supplies circuits with no known orientation-support or certificate bound. |
-| T10 | Therefore `NP not subseteq P/poly` | not established | Must close a special CLO compression/locality theorem or another unrestricted representation lower bound. |
+| T10 | Therefore `NP not subseteq P/poly` | not established | Must prove anchorability plus robust CLO simulation, or another unrestricted representation lower bound. |
 
 ## Required proof format
 
@@ -61,8 +64,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Search for positive-side families with polynomial cardinality and bounded `k`-set load that are more expressive than fixed-size containment templates.
-2. Analyze whether large anchors of size `Omega(k/d)` can be encoded compactly and preserve robust CLO correctness.
-3. Determine whether a CLO lower bound tolerating `d` growing with `k` would still yield a superpolynomial exponent.
-4. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with robust correctness and explicit rectangle accounting.
-5. Keep all few-NOT, orientation, certificate-margin, and template-calculus results as restricted endpoints and do not describe them as an unrestricted separation.
+1. Prove or falsify an anchorability theorem mapping every exceptional hard pair of a canonical circuit into one of the explicit large-anchor rectangles.
+2. Prove robust CLO correctness for arbitrary separating interpretations of those anchor oracles.
+3. Analyze whether canonical circuit paths naturally expose large vertex anchors of size `Omega(k/d)`.
+4. Determine whether the `A_d` CLO lower bound remains superpolynomial for the exact `d` delivered by a candidate construction.
+5. Keep all few-NOT, orientation, certificate-margin, and anchor-family results as restricted or conditional endpoints and do not describe them as an unrestricted separation.
