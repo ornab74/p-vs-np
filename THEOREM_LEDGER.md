@@ -33,19 +33,22 @@ This file records the actual dependency graph of the program. A claim may move t
 | T7i | Layered CLIQUE inherits the mixed sparse/dense-negation lower bound | proved from corrected Koroth--Sarma theorem and exact projection | Allows a few arbitrary dense negations plus additional negations with small orientation support. |
 | T7j | Layered CLIQUE inherits the vertex-support orientation depth lower bound | proved from Koroth--Sarma and exact projection | Measures graph vertices incident to oriented edge variables. |
 | T7k | Minimal orientation weight and incident-vertex support are mechanically computable for finite gate truth tables | proved | Exact but exponential in gate arity. |
-| T7l | Small random decreasing-edge audit rejection implies small orientation support | false without a violation-mass margin | The spike function has full support `N` but rejection probability `2^{-(N-1)}`; see `ORIENTATION_MASS_BARRIER.md`. |
-| T7m | Under the promise `nu_i=0` or `nu_i>=tau`, edge-audit error `delta` bounds orientation support by `N delta/tau` | proved | Exact counting argument; useful only if a nontrivial `tau` follows from special structure. |
-| T7n | Two-sided certificate complexity gives an anti-hiding margin `nu_i>0 => nu_i>=2^{-(C0+C1-2)}` | proved | `CERTIFICATE_MARGIN_ORIENTATION_THEOREM.md`; decreasing endpoints' certificates generate a violating subcube. |
+| T7l | Small random decreasing-edge audit rejection implies small orientation support | false without a violation-mass margin | The spike function has full support `N` but rejection probability `2^{-(N-1)}`. |
+| T7m | Under the promise `nu_i=0` or `nu_i>=tau`, edge-audit error `delta` bounds orientation support by `N delta/tau` | proved | Useful only if a nontrivial `tau` follows from special structure. |
+| T7n | Two-sided certificate complexity gives an anti-hiding margin `nu_i>0 => nu_i>=2^{-(C0+C1-2)}` | proved | Decreasing endpoints' certificates generate a violating subcube. |
 | T7o | Gate-wise bounds `C0+C1<=c` and directional audit mass `delta` imply orientation weight at most `N delta 2^{c-2}` | proved | Activates the sparse-orientation depth theorem for this certified restricted class. |
-| T7p | Full edge-flip mass plus two-sided certificates bounds ordinary variable support by `N delta_flip 2^{c-2}` | proved | Supplies the support quantity used by the mixed-negation theorem when the internal-gate hypotheses are available. |
+| T7p | Full edge-flip mass plus two-sided certificates bounds ordinary variable support by `N delta_flip 2^{c-2}` | proved | Supplies the support quantity used by the mixed-negation theorem when internal-gate hypotheses are available. |
 | T7q | Small average gate violation mass implies few high-orientation exceptional gates | proved by summation and Markov | Still requires white-box access to internal gate masses and certificate bounds. |
-| T7r | Two-sided certificates automatically give polynomially many CLO rectangles | false in general | Constant certificate sum gives polynomially many candidate pairs, but logarithmic sum gives only quasipolynomial count; arbitrary hard pairs need not admit compatible minimum certificates. |
-| T7s | Small certificate complexity implies small CLO locality | false | A single negated edge literal has `C0+C1=2` but its natural clique--multipartite rectangle has locality bounded away from zero and approaching `1`; see `CERTIFICATE_TO_CLO_BARRIER.md`. |
-| T7t | Compatible certificate pairs define valid gate-separation rectangles | proved | Robust CLO correctness and coverage of every needed hard pair remain separate obligations. |
-| T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits and certificate bounds do not control positive-negative oracle rectangles under the hard distribution. |
+| T7r | Two-sided certificates automatically give polynomially many CLO rectangles | false in general | Constant certificate sum gives polynomially many candidate pairs, but logarithmic sum gives only quasipolynomial count. |
+| T7s | Small certificate complexity implies small CLO locality | false | A single negated edge literal has `C0+C1=2` but its natural clique--multipartite rectangle has locality bounded away from zero and approaching `1`. |
+| T7t | Compatible certificate pairs define valid gate-separation rectangles | proved | Robust CLO correctness and hard-pair coverage remain separate obligations. |
+| T7u | Fixed vertex anchors give exact low-locality clique--multipartite rectangles | proved | For `|S|=s`, locality is `[(k)_s/(n)_s][((k-1)^(n-s)-1)/((k-1)^(n-1)-1)]`; see `WITNESS_TEMPLATE_LOCALITY_CALCULUS.md`. |
+| T7v | A large family of constant-size witness anchors can satisfy constant `A_d` | false | If `s(d+1)<=k`, condition `A_d` forces at most `d` distinct size-`s` anchors. |
+| T7w | The complete family of edge-witness rectangles has low union locality | false | It covers every hard pair, so union locality is exactly `1`, and each positive clique lies in `binom(k,2)` positive sides. |
+| T8 | Constructed oracle model has sufficiently small CLO locality | open | Current audits, certificates, and local witness templates do not simultaneously give low locality, polynomial expressive capacity, and bounded positive overlap. |
 | T8a | Known arbitrary-depth CLO CLIQUE lower bound applies directly | false / not established | Requires bounded locality and extra positive-side overlap condition. |
 | T8b | Distributional error yields pointwise separation of CLO hard sets | open | Requires transfer and cleanup. |
-| T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair; polynomial cleanup needs special rectangle structure. |
+| T8c | Average-case cleanup is generically cheap | false | Repairing an arbitrary bad-pair set may require one correction rectangle per pair. |
 | T9 | Hard graph projection matches a lower-bound parameter regime | clarified | Fixing CLIQUE parameter bits preserves polynomial circuit size under `NP subseteq P/poly`. |
 | T9a | Formal layered language has superpolynomial lower bound for circuits with at most `(1/6) log log m` NOT gates | proved from Amano--Maruoka | Exact polynomial projection to their CLIQUE family. |
 | T9b | Audits imply an equivalent circuit with few NOT gates | impossible from black-box audits alone | Would require white-box canonicalization or a new representation theorem. |
@@ -58,8 +61,8 @@ For every theorem or lemma, include exact parameters and quantifiers; circuit an
 
 ## Immediate priority order
 
-1. Search for hard-distribution-specific rectangles whose locality is small, not merely cube-thick certificate subcubes.
-2. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with robust correctness and explicit rectangle accounting.
-3. Search for graph-sensitive identities that imply vertex concentration or polynomially templated exceptional pairs.
-4. Prove the positive-side overlap condition required by the known arbitrary-depth CLO lower bound.
-5. Keep all few-NOT, orientation, and certificate-margin results as restricted endpoints and do not describe them as an unrestricted separation.
+1. Search for positive-side families with polynomial cardinality and bounded `k`-set load that are more expressive than fixed-size containment templates.
+2. Analyze whether large anchors of size `Omega(k/d)` can be encoded compactly and preserve robust CLO correctness.
+3. Determine whether a CLO lower bound tolerating `d` growing with `k` would still yield a superpolynomial exponent.
+4. Prove or falsify circuit-to-CLO conversion from small KW orientation defect with robust correctness and explicit rectangle accounting.
+5. Keep all few-NOT, orientation, certificate-margin, and template-calculus results as restricted endpoints and do not describe them as an unrestricted separation.
