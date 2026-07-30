@@ -48,3 +48,4 @@ jobs:
           python tools/counterexample_force_and_masked_gate.py
           python tools/counterexample_graph_blind_audits.py
           python tools/counterexample_localnot_restriction.py
+          python tools/kw_defect_programming_barrier.py
